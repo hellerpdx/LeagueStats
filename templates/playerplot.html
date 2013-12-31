@@ -133,7 +133,7 @@
 var playerName = "David Heller";
 					 
 //load data
-d3.csv("{{ url_for('static', filename='heller.csv') }}", function(d) {
+d3.csv("{{ url_for('static', filename='files/heller.csv') }}", function(d) {
 	return {
 		confidence: +d.Confidence,
 		name: d.Name,
@@ -199,20 +199,8 @@ function drawAxis() {
 	
 };
 
-// because of conflict with text between showing the team
-// name and the axis ticks, remove the axis then add the 
-// team then add the axis back  
-
-/*
-d3.selectAll("p")
-.on("click", function() {
-	d3.selectAll("g").remove();
-	plotTeam();
-	d3.selectAll("circle").remove();
-	drawAxis();
-});*/
-
-// a better way
+// allows to switch from circles to team name
+// to-do: allow to switch back
 d3.selectAll("p")
   .on("click", function() {
 	  d3.selectAll("circle")
