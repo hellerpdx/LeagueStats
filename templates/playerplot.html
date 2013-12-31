@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Player Plot</title>
+	<meta name="author" content="David Heller">
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script>
+	$ (function() {
+
+		var players = ["Jody Friedman", "Christopher S", "Glenn Dierkes", "Paul Kotas", 
+		"Ken Waterman", "lenny shapiro", "Mike Frazzini", "Rob Matthews", "Jacob Gabriel", 
+		"Davis Jackson", "Jason Gannett", "Brain Ciferri", "Dan Myers", "steve lrnz", "Russell Grand", 
+		"Joseph Suther", "Tim Hazen", "Ben Eisner", "Charles Bragi", "Brian Kennedy", 
+		"glenn simpson", "tom scanlon", "Ashley Brown", "jeff mills", "John Lamb", "Gerry Taccone", 
+		"Kevin Gillett", "Kyle Brown", "Ron Greenberg", "Bill Croteau", "Brad Marshall", "Philip Sandle", 
+		"Thad Murata", "jeff brooks", "Michael Whitt", "Mike Waterman", "Craig Blake", "Dave Kistler", 
+		"Drew", "Joe Kresse", "Justin Kubiak", "Wilson Eisner", "Bill Corwin", "Russ Baker", 
+		"Tom Salentine", "william passe", "alan macdonal", "Neal Suggs", "william brown", "Zach Parker", 
+		"Brian Wight", "Himanshu Khur", "Jeff Reese", "Dave Stephens", "Jeff Wilke", "Rich King", 
+		"claude simpso", "Curt Fischer", "emma jassy", "Brent Jaye", "mark parson", "llama llama", 
+		"Matthew Folk", "Noah Eisner", "OliviaGrace W", "Tom Testa", "jane salentin", "CJ Moses", 
+		"Dave Schappel", "Mattie Gutter", "Travis Grizze", "brian scanlon", "Chris Choi", "Coonhound Tul", 
+		"Ken Weber", "Kevin Samione", "Srini D", "Buz Bedford", "Craig Berman", "everett jassy", 
+		"Kevin Kelly", "Mark Carlton", "Jack Magliaro", "Jonathan Ebin", "Richard Steph", "Sam Birtwistl", 
+		"Young Lee", "ben mlynash", "craig duffy", "lou man", "Paul Magliaro", "Will Croteau", "Bart Brown", 
+		"Jim Martel", "John Hoskins", "Kye Steffey", "mike boese", "Peter Sirota", "Reco Collins", 
+		"Brian Harmon", "Jeff Ball", "Mark Peek", "andrew delia", "Terry Wise", "Tom Howes", "John McGeary", 
+		"Kathie Dalzel", "Samantha Davi", "Axel Wagner", "Guy Palumbo", "Kris Browne", "Lawrence Ever", 
+		"Paul Blake", "Paul Samione", "Scott Friedma", "Scott Krigel", "Stacey Pistol", "Tom Barr", 
+		"Charlie Schae", "Debbie Joachi", "James Potter", "Rich Fontaine", "Satya Patel", "Tin Nguyen", 
+		"Dan Anderson", "david leavy", "Howard Gefen", "joseph n dici", "Matthew Nelso", "Ed Choi", 
+		"John Curran", "Matthew Jones", "Mike Ferguson", "Ryan Lysne", "Steve Schmidt", "andy jassy", 
+		"Cam Croteau", "Jack Kelly", "Michael A Bod", "Avneet Atwal", "Bob Van Nortw", "Eric Sanderso", 
+		"Kevin Miller", "Bob Kinney", "Chris Vonderh", "Dan Croteau", "dave martin", "David Morgan", 
+		"Ed Mathews", "Rob Mason", "Jim McGrail", "Shelby Crotea", "steve rabuchi", "trevor scanlo", 
+		"Darren Casey", "David Zapolsk", "Matt R", "Nick Radovich", "Sean Boyle", "Brian Valenti", 
+		"George Shilli", "Pooja Joshipu", "Chris Stone", "Michael Deal", "Mike Herron", "Nova Kopitar", 
+		"Don Wolfe", "Elana Jassy", "jeff parks", "matt garman", "Robert Willia", "steve mesh", "Brenda Dodd", 
+		"drew herdener", "Kristin Maria", "Steve Alseth", "Charlie Roy", "Jason Hekl", "Jason Warnick", 
+		"RealDave Horn", "Ritesh Patel", "Augie Goldber", "Gary Justiss", "Kevin McGrath", "Patrick Winte", 
+		"Andrew Lieber", "Brian Birtwis", "Peter Vosshal", "Alex Boltz", "Brian O'Conne", "dan robin", 
+		"Gene Farrell", "John Sicilian", "Kaitie Donova", "Peter Hirschm", "Philip Sugar", "jack jassy", 
+		"Ken Eisner", "Amaan Penang", "Brian Redland", "Cyn Zhang", "kim nelson", "scott jacobs", "Chris Perle", 
+		"brad goldberg", "matt gnaneswa", "Greg Kuzma", "scott alseth", "Jay Marine", "David Heller", "Tim Halladay", 
+		"Brian Olsavsk", "Mark Eamer", "Syon Patel", "Brian Schwarz", "harry haas", "Patrick Sulli", "Stu Haas", 
+		"Jamie Kocenia", "William Wong", "Cayce Roy", "Michael Hirsc", "Gary simpson", "Curt Ohrt", "Dave Knopf", 
+		"Peter DeSanti", "Sarah Redland", "family smulso", "Name", "Jason Spiller", "Steve DeMatte"];
+
+		    $( "#players" ).autocomplete({
+			    source: players,
+			});
+		});
+	</script>
+
+	<style type="text/css">
+	
+	.axis path,
+	.axis line {
+		fill: none;
+		stroke: black;
+		shape-rendering: crispEdges;
+	}
+	
+	.axis text {
+		font-family: sans-serif;
+		font-size: 11px;
+	}
+	
+	p {
+		font-family: sans-serif;
+		font-size: 13px;
+		color: blue;
+	}
+	
+	.ui-widget {
+		font-family: sans-serif;
+		font-size: 13px;
+	}
+
+	</style>
+
+	<!-- Date: 2013-12-26 -->
+</head>
+<body>
+	<div class="ui-widget">
+		<label for="players">Pick Player</label>
+		<input for id="players">
+	</div>
+	<!--removes circles and shows teams picked-->
+	<p>Show Teams</p>
+<script>
+
+	// create element
+	var w = 700;
+	var h = 375;
+	var yPadding = 40;
+	var xPadding = 65;
+	var textPadding = 10;
+	
+	var svg = d3.select("body")
+	            .append("svg")
+				.attr("width", w)
+				.attr("height", h);
+					
+	// create scales
+	var xScale = d3.scale.linear()
+						 .domain([1,17])
+						 .range([xPadding, w - xPadding]);
+						 
+
+ 	var yScale = d3.scale.linear()
+ 						 .domain([1,16])
+ 						 .range([h - yPadding, yPadding]);
+						 
+    // create axis						 
+ 	var xAxis = d3.svg.axis()
+ 					  .scale(xScale)
+ 					  .orient("bottom")
+ 					  .ticks(17);
+
+  	var yAxis = d3.svg.axis()
+  					  .scale(yScale)
+  					  .orient("left")
+ 				      .ticks(16);
+	
+//used to store playerName, use my name as  default				  
+var playerName = "David Heller";
+					 
+//load data
+d3.csv("{{ url_for('static', filename='heller.csv') }}", function(d) {
+	return {
+		confidence: +d.Confidence,
+		name: d.Name,
+		result: d.Results,
+		team: d.Team,
+		week: +d.Week
+	};
+}, function(error, rows) {
+	dataset = rows;
+	console.log(rows);
+	plotCircle();
+	plotTeam();
+	drawAxis();
+});
+	
+	
+function plotCircle() {
+
+	svg.selectAll("circle")
+       .data(dataset)
+       .enter()
+       .append("circle")
+   	   .attr("cx", function(data) { return xScale(data.week); })
+	   .attr("cy", function(data) { return yScale(data.confidence); })
+	   .attr("r", 5)
+	   .attr("fill", function(data) {
+		   if (data.result == "CORRECT") { return "green"; } 
+		   else { return "red";}
+	   });
+   };
+   
+function plotTeam() {
+			   
+   	svg.selectAll("text")
+   	   .data(dataset)
+   	   .enter()
+   	   .append("text")
+   	   .text(function(data) { return data.team; })
+   	   .attr("x", function(data) { return xScale(data.week) - textPadding; })
+	   // nudge down by 5 to center text 
+   	   .attr("y", function(data) { return yScale(data.confidence) + 5; })
+	   .attr("font-family","sans-serif")
+	   .attr("font-size","11px")
+   	   .attr("fill", function(data) {
+   		   if (data.result == "CORRECT") { return "green"; } 
+   		   else { return "red";} 
+   	   })
+	   .style("opacity","0");
+   };
+
+function drawAxis() {
+	//create axis
+					  
+    svg.append("g")
+       .attr("class", "axis")
+       .attr("transform", "translate(0, 350)")
+       .call(xAxis);
+
+	svg.append("g")
+	   .attr("class", "axis")
+	   .attr("transform", "translate(" + (yPadding) + ",0)")
+	   .call(yAxis);
+	
+};
+
+// because of conflict with text between showing the team
+// name and the axis ticks, remove the axis then add the 
+// team then add the axis back  
+
+/*
+d3.selectAll("p")
+.on("click", function() {
+	d3.selectAll("g").remove();
+	plotTeam();
+	d3.selectAll("circle").remove();
+	drawAxis();
+});*/
+
+// a better way
+d3.selectAll("p")
+  .on("click", function() {
+	  d3.selectAll("circle")
+	    .transition()
+		.style("opacity", "0")
+	  d3.selectAll("text")
+	    .transition()
+		.style("opacity", "1")
+  });
+
+// Set playerName based on input selection
+$("#players").on("autocompleteselect", function(event, ui){
+	playerName = $("#players").val();
+});
+
+</script>
+
+</body>
+
+</html>
