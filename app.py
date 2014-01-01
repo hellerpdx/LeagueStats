@@ -9,6 +9,7 @@ app.config.update(
     DEBUG = True,
 )
 
+
 @app.route("/")
 
 def hello():

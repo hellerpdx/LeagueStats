@@ -76,12 +76,28 @@
 		font-family: sans-serif;
 		font-size: 13px;
 		color: blue;
+		display: inline;
+	}
+	
+	#week {
+		font-size: 16px;
+		font-family: sans-serif;
+		color: black;
+		padding: 330px;
+	}
+	
+	h2 {
+		font-family: sans-serif;
+		font-size: 24px;
+		color: black;
 	}
 	
 	.ui-widget {
 		font-family: sans-serif;
 		font-size: 13px;
 	}
+	
+
 
 	</style>
 
@@ -92,8 +108,13 @@
 		<label for="players">Pick Player</label>
 		<input for id="players">
 	</div>
+	<h2>Now showing {{ playerName }}</h2>
 	<!--removes circles and shows teams picked-->
-	<p>Show Teams</p>
+	<div>
+		<p id="show_teams">Show Teams</p> /
+		<p id="hide_teams">Hide Teams</p>
+	</div>
+
 <script>
 
 	// create element
@@ -130,13 +151,13 @@
  				      .ticks(16);
 	
 //used to store playerName, use my name as  default				  
-var playerName = "Noah Eisner";
 
-var playerMap = {"David Heller":"heller.csv",
-				  "Noah Eisner":"eisner.csv"};
+var playerName = "David Heller";
+
+var playerMap = {"Debbie Joachi": "chi120.csv", "Curt Ohrt": "hrt224.csv", "Brian Schwarz": "arz215.csv", "Justin Kubiak": "iak41.csv", "Tom Testa": "sta66.csv", "Christopher S": "r S2.csv", "Jack Kelly": "lly138.csv", "Philip Sandle": "dle32.csv", "Kris Browne": "wne111.csv", "matt gnaneswa": "swa206.csv", "Kevin Samione": "one76.csv", "Philip Sugar": "gar196.csv", "John Sicilian": "ian193.csv", "CJ Moses": "ses68.csv", "everett jassy": "ssy80.csv", "Augie Goldber": "ber182.csv", "Jason Gannett": "ett11.csv", "Gary simpson": "son223.csv", "dan robin": "bin191.csv", "Bob Van Nortw": "rtw141.csv", "Drew": "rew39.csv", "Dan Anderson": "son125.csv", "Axel Wagner": "ner109.csv", "Noah Eisner": "ner64.csv", "Buz Bedford": "ord78.csv", "Stacey Pistol": "tol117.csv", "Travis Grizze": "zze71.csv", "Mattie Gutter": "ter70.csv", "andy jassy": "ssy136.csv", "joseph n dici": "ici128.csv", "Ben Eisner": "ner18.csv", "Mike Waterman": "man36.csv", "Brain Ciferri": "rri12.csv", "Jody Friedman": "man1.csv", "Michael A Bod": "Bod139.csv", "Kevin Kelly": "lly81.csv", "Kathie Dalzel": "zel107.csv", "Craig Blake": "ake37.csv", "Curt Fischer": "her58.csv", "Jamie Kocenia": "nia219.csv", "John McGeary": "ary106.csv", "Peter Hirschm": "chm195.csv", "jane salentin": "tin67.csv", "Rob Mason": "son150.csv", "glenn simpson": "son21.csv", "Eric Sanderso": "rso142.csv", "lenny shapiro": "iro6.csv", "Coonhound Tul": "Tul74.csv", "Paul Kotas": "tas4.csv", "Jeff Wilke": "lke55.csv", "Mark Eamer": "mer213.csv", "Michael Deal": "eal164.csv", "Dave Schappel": "pel69.csv", "Ryan Lysne": "sne134.csv", "Brian O'Conne": "nne190.csv", "Michael Hirsc": "rsc222.csv", "Cayce Roy": "Roy221.csv", "Srini D": "i D77.csv", "Satya Patel": "tel123.csv", "Mike Ferguson": "son133.csv", "Joseph Suther": "her16.csv", "Wilson Eisner": "ner42.csv", "Tom Salentine": "ine45.csv", "scott jacobs": "obs203.csv", "tom scanlon": "lon22.csv", "Jim McGrail": "ail151.csv", "Matt R": "t R157.csv", "Charles Bragi": "agi19.csv", "lou man": "man90.csv", "Michael Whitt": "itt35.csv", "Brent Jaye": "aye60.csv", "Terry Wise": "ise104.csv", "Peter Sirota": "ota98.csv", "Chris Choi": "hoi73.csv", "Chris Perle": "rle204.csv", "Jacob Gabriel": "iel9.csv", "Zach Parker": "ker50.csv", "Jeff Reese": "ese53.csv", "steve mesh": "esh172.csv", "Mark Peek": "eek102.csv", "Matthew Nelso": "lso129.csv", "Brian Valenti": "nti160.csv", "Jason Hekl": "ekl178.csv", "Paul Blake": "ake113.csv", "Jonathan Ebin": "bin84.csv", "Brenda Dodd": "odd173.csv", "Ritesh Patel": "tel181.csv", "claude simpso": "pso57.csv", "Kevin Gillett": "ett27.csv", "jeff mills": "lls24.csv", "mike boese": "ese97.csv", "Russell Grand": "and15.csv", "Paul Magliaro": "aro91.csv", "Dave Stephens": "ens54.csv", "Gary Justiss": "iss183.csv", "Cam Croteau": "eau137.csv", "Craig Berman": "man79.csv", "Chris Vonderh": "erh145.csv", "Kyle Brown": "own28.csv", "Andrew Lieber": "ber186.csv", "steve lrnz": "rnz14.csv", "Charlie Schae": "hae119.csv", "William Wong": "ong220.csv", "Reco Collins": "ins99.csv", "Ken Waterman": "man5.csv", "Charlie Roy": "Roy177.csv", "Ashley Brown": "own23.csv", "Steve Alseth": "eth176.csv", "Bob Kinney": "ney144.csv", "Steve DeMatte": "tte230.csv", "harry haas": "aas216.csv", "Brian Olsavsk": "vsk212.csv", "Steve Schmidt": "idt135.csv", "Kevin McGrath": "ath184.csv", "Jeff Ball": "all101.csv", "Ken Eisner": "ner198.csv", "Robert Willia": "lia171.csv", "Young Lee": "Lee87.csv", "Mike Frazzini": "ini7.csv", "Peter Vosshal": "hal188.csv", "Brian Birtwis": "wis187.csv", "OliviaGrace W": "e W65.csv", "drew herdener": "ner174.csv", "Tin Nguyen": "yen124.csv", "Dan Myers": "ers13.csv", "Brian Wight": "ght51.csv", "Kaitie Donova": "ova194.csv", "Pooja Joshipu": "ipu162.csv", "jeff parks": "rks169.csv", "brian scanlon": "lon72.csv", "Brian Harmon": "mon100.csv", "Jack Magliaro": "aro83.csv", "Jason Warnick": "ick179.csv", "Jim Martel": "tel94.csv", "william passe": "sse46.csv", "Dan Croteau": "eau146.csv", "Bill Croteau": "eau30.csv", "Jay Marine": "ine209.csv", "Rich King": "ing56.csv", "Ken Weber": "ber75.csv", "Tom Barr": "arr118.csv", "Thad Murata": "ata33.csv", "dave martin": "tin147.csv", "Peter DeSanti": "nti226.csv", "Jason Spiller": "ler229.csv", "David Morgan": "gan148.csv", "Tom Howes": "wes105.csv", "John Lamb": "amb25.csv", "David Heller": "ler210.csv", "jeff brooks": "oks34.csv", "RealDave Horn": "orn180.csv", "Rich Fontaine": "ine122.csv", "James Potter": "ter121.csv", "Ed Choi": "hoi130.csv", "alan macdonal": "nal47.csv", "Cyn Zhang": "ang201.csv", "Darren Casey": "sey155.csv", "Avneet Atwal": "wal140.csv", "mark parson": "son61.csv", "Howard Gefen": "fen127.csv", "llama llama": "ama62.csv", "Bill Corwin": "win43.csv", "Brad Marshall": "all31.csv", "Rob Matthews": "ews8.csv", "Don Wolfe": "lfe167.csv", "Ed Mathews": "ews149.csv", "Davis Jackson": "son10.csv", "family smulso": "lso228.csv", "Shelby Crotea": "tea152.csv", "Matthew Folk": "olk63.csv", "trevor scanlo": "nlo154.csv", "Sarah Redland": "and227.csv", "Patrick Winte": "nte185.csv", "Kevin Miller": "ler143.csv", "Kristin Maria": "ria175.csv", "Patrick Sulli": "lli217.csv", "Brian Kennedy": "edy20.csv", "Chris Stone": "one163.csv", "Richard Steph": "eph85.csv", "steve rabuchi": "chi153.csv", "Bart Brown": "own93.csv", "Dave Kistler": "ler38.csv", "Matthew Jones": "nes132.csv", "Kye Steffey": "fey96.csv", "Scott Krigel": "gel116.csv", "david leavy": "avy126.csv", "Syon Patel": "tel214.csv", "Greg Kuzma": "zma207.csv", "Gene Farrell": "ell192.csv", "Brian Redland": "and200.csv", "Russ Baker": "ker44.csv", "Glenn Dierkes": "kes3.csv", "craig duffy": "ffy89.csv", "Mark Carlton": "ton82.csv", "Ron Greenberg": "erg29.csv", "scott alseth": "eth208.csv", "Joe Kresse": "sse40.csv", "andrew delia": "lia103.csv", "John Hoskins": "ins95.csv", "Nova Kopitar": "tar166.csv", "Stu Haas": "aas218.csv", "Tim Hazen": "zen17.csv", "Himanshu Khur": "hur52.csv", "Tim Halladay": "day211.csv", "jack jassy": "ssy197.csv", "Sean Boyle": "yle159.csv", "Scott Friedma": "dma115.csv", "Alex Boltz": "ltz189.csv", "Guy Palumbo": "mbo110.csv", "Samantha Davi": "avi108.csv", "Neal Suggs": "ggs48.csv", "Sam Birtwistl": "stl86.csv", "Gerry Taccone": "one26.csv", "matt garman": "man170.csv", "George Shilli": "lli161.csv", "emma jassy": "ssy59.csv", "Nick Radovich": "ich158.csv", "ben mlynash": "ash88.csv", "Lawrence Ever": "ver112.csv", "kim nelson": "son202.csv", "Elana Jassy": "ssy168.csv", "Dave Knopf": "opf225.csv", "Will Croteau": "eau92.csv", "John Curran": "ran131.csv", "David Zapolsk": "lsk156.csv", "brad goldberg": "erg205.csv", "Mike Herron": "ron165.csv", "william brown": "own49.csv", "Amaan Penang": "ang199.csv", "Paul Samione": "one114.csv"};
 
 var sourceFile = playerMap[playerName];
-					 
+			 
 //load data
 
 function loadData() {
@@ -156,8 +177,6 @@ d3.csv("static/files/"+sourceFile, function(d) {
 	drawAxis();
 });
 };
-
-	
 	
 function plotCircle() {
 
@@ -181,6 +200,7 @@ function plotTeam() {
    	   .enter()
    	   .append("text")
    	   .text(function(data) { return data.team; })
+	   .attr("class", "team")
    	   .attr("x", function(data) { return xScale(data.week) - textPadding; })
 	   // nudge down by 5 to center text 
    	   .attr("y", function(data) { return yScale(data.confidence) + 5; })
@@ -209,8 +229,8 @@ function drawAxis() {
 };
 
 // allows to switch from circles to team name
-// to-do: allow to switch back
-d3.selectAll("p")
+
+d3.select("#show_teams")
   .on("click", function() {
 	  d3.selectAll("circle")
 	    .transition()
@@ -219,6 +239,17 @@ d3.selectAll("p")
 	    .transition()
 		.style("opacity", "1")
   });
+  
+d3.select("#hide_teams")
+.on("click", function() {
+  d3.selectAll("circle")
+    .transition()
+	.style("opacity", "1")
+  d3.selectAll(".team")
+    .transition()
+	.style("opacity", "0")
+});
+
 
 // Set playerName based on input selection
 $("#players").on("autocompleteselect", function(event, ui){
@@ -232,7 +263,7 @@ $("#players").on("autocompleteselect", function(event, ui){
 loadData();
 
 </script>
-
+<div><p id="week">Week</p></div>
 </body>
 
 </html>
