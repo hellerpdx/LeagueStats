@@ -130,10 +130,17 @@
  				      .ticks(16);
 	
 //used to store playerName, use my name as  default				  
-var playerName = "David Heller";
+var playerName = "Noah Eisner";
+
+var playerMap = {"David Heller":"heller.csv",
+				  "Noah Eisner":"eisner.csv"};
+
+var sourceFile = playerMap[playerName];
 					 
 //load data
-d3.csv("{{ url_for('static', filename='files/heller.csv') }}", function(d) {
+
+function loadData() {
+d3.csv("static/files/"+sourceFile, function(d) {
 	return {
 		confidence: +d.Confidence,
 		name: d.Name,
@@ -148,6 +155,8 @@ d3.csv("{{ url_for('static', filename='files/heller.csv') }}", function(d) {
 	plotTeam();
 	drawAxis();
 });
+};
+
 	
 	
 function plotCircle() {
@@ -214,7 +223,13 @@ d3.selectAll("p")
 // Set playerName based on input selection
 $("#players").on("autocompleteselect", function(event, ui){
 	playerName = $("#players").val();
+	sourceFile = playerMap[playerName];
+	d3.selectAll("circle").remove();
+	d3.selectAll("text").remove();
+	loadData();
 });
+
+loadData();
 
 </script>
 
