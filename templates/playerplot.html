@@ -80,15 +80,15 @@
 	}
 	
 	#week {
-		font-size: 16px;
+		font-size: 14px;
 		font-family: sans-serif;
 		color: black;
-		padding: 330px;
+		padding: 225px;
 	}
 	
 	h2 {
 		font-family: sans-serif;
-		font-size: 24px;
+		font-size: 18px;
 		color: black;
 	}
 	
@@ -105,12 +105,12 @@
 </head>
 <body>
 	<div class="ui-widget">
-		<label for="players">Pick Player</label>
+		<label for="players">Player</label>
 		<input for id="players">
 	</div>
-	<h2>Now showing {{ playerName }}</h2>
 	<!--removes circles and shows teams picked-->
-	<div>
+	
+	<div><h2>Picks by Confidence</h2>
 		<p id="show_teams">Show Teams</p> /
 		<p id="hide_teams">Hide Teams</p>
 	</div>
@@ -118,12 +118,14 @@
 <script>
 
 	// create element
-	var w = 700;
+	var w = 575;
 	var h = 375;
 	var yPadding = 40;
 	var xPadding = 65;
 	var textPadding = 10;
 	
+//view by confidence
+
 	var svg = d3.select("body")
 	            .append("svg")
 				.attr("width", w)
@@ -175,6 +177,8 @@ d3.csv("static/files/"+sourceFile, function(d) {
 	plotCircle();
 	plotTeam();
 	drawAxis();
+	drawTeamAxis();
+	plotTeamCircle();
 });
 };
 	
@@ -261,6 +265,94 @@ $("#players").on("autocompleteselect", function(event, ui){
 });
 
 loadData();
+
+</script>
+
+<div><h2>Picks by Team</h2></div>
+
+<script>
+
+//View by Team
+
+/*
+var w = 650;
+var h = 375;
+var yPadding = 40;
+var xPadding = 65;
+var textPadding = 10;*/
+
+
+var Teamw = 450;
+var Teamh = 675;
+var yTeamPadding = 40;
+var xTeamPadding = 65;
+
+var textTeamPadding = 10;
+
+var Teamsvg = d3.select("body")
+            .append("svg")
+			.attr("width", Teamw)
+			.attr("height", Teamh);
+			
+// create Team scales
+
+var xTeamScale = d3.scale.linear()
+					 .domain([1,17])
+					 .range([xTeamPadding, Teamw - xTeamPadding]);
+			 
+
+var yTeamScale = d3.scale.ordinal()
+					 .domain(['ARI', 'ATL', 'BAL', 'BUF', 'CAR', 'CHI', 'CIN', 'CLE', 
+					 'DAL', 'DEN', 'DET', 'GB', 'HOU', 'IND', 'JAC', 'KC', 'MIA', 'MIN', 
+					 'NE', 'NO', 'NYG', 'NYJ', 'OAK', 'PHI', 'PIT', 'SD', 'SEA', 'SF', 
+					 'STL', 'TB', 'TEN', 'WAS'])
+					 .rangePoints([yTeamPadding, Teamh-yTeamPadding]);
+					 
+ // create axis						 
+var xTeamAxis = d3.svg.axis()
+				  .scale(xTeamScale)
+				  .orient("bottom")
+				  .ticks(17);
+
+var yTeamAxis = d3.svg.axis()
+				  .scale(yTeamScale)
+				  .orient("left")
+				  .tickValues(['ARI', 'ATL', 'BAL', 'BUF', 'CAR', 'CHI', 'CIN', 'CLE', 
+					 'DAL', 'DEN', 'DET', 'GB', 'HOU', 'IND', 'JAC', 'KC', 'MIA', 'MIN', 
+					 'NE', 'NO', 'NYG', 'NYJ', 'OAK', 'PHI', 'PIT', 'SD', 'SEA', 'SF', 
+					 'STL', 'TB', 'TEN', 'WAS']);
+
+function plotTeamCircle() {
+
+	Teamsvg.selectAll("circle")
+       .data(dataset)
+       .enter()
+       .append("circle")
+	   .attr("class", "teamcircle")
+   	   .attr("cx", function(data) { return xTeamScale(data.week); })
+	   .attr("cy", function(data) { return yTeamScale(data.team); })
+	   .attr("r", 5)
+	   .attr("fill", function(data) {
+		   if (data.result == "CORRECT") { return "green"; } 
+		   else { return "red";}
+	   });
+   };
+ 
+function drawTeamAxis() {
+//create Team axis
+				  
+   Teamsvg.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(0, 645)")
+      .call(xTeamAxis);
+
+	Teamsvg.append("g")
+	   .attr("class", "axis")
+	   .attr("transform", "translate(" + (yTeamPadding) + ",0)")
+	   .call(yTeamAxis);
+
+};
+
 
 </script>
 <div><p id="week">Week</p></div>
