@@ -83,7 +83,7 @@
 		font-size: 16px;
 		font-family: sans-serif;
 		color: black;
-		padding: 330px;
+		padding: 300px;
 	}
 	
 	h2 {
@@ -95,6 +95,11 @@
 	.ui-widget {
 		font-family: sans-serif;
 		font-size: 13px;
+	}
+	
+	#footer {
+		font-size:14px;
+		padding-top:10px;
 	}
 	
 
@@ -265,6 +270,7 @@ $("#players").on("autocompleteselect", function(event, ui){
 loadData();
 
 </script>
+<div><p id="week">Week</p></div>
 
 <div><h2>Picks by Team</h2></div>
 
@@ -336,10 +342,10 @@ function plotTeamCircle() {
 	   });
    };
    
-/*
+
 function plotConfidence() {
 
-};*/
+};
 
  
 function drawTeamAxis() {
@@ -357,11 +363,15 @@ function drawTeamAxis() {
 
 };
 
-
 </script>
 
 
-<!-- <div><p id="week">Week</p></div> -->
+
+
+<div id='footer'>Questions/Comments? 
+<a href="http://www.twitter.com/davidheller">@davidheller</a> 
+or <a href="mailto: heller1970@gmail.com">heller1970 at gmail dot com</a></div>
+
 </body>
 
 </html>
