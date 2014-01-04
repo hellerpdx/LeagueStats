@@ -60,6 +60,10 @@
 
 	<style type="text/css">
 	
+	#show {
+		padding-top: 10px;
+	}
+	
 	.axis path,
 	.axis line {
 		fill: none;
@@ -112,14 +116,12 @@
 	<div class="ui-widget">
 		<label for="players">Pick Player</label>
 		<input for id="players">
+		<p id="show_teams">Show Detail</p> /
+		<p id="hide_teams">Hide Detail</p>
 	</div>
-	<h2>Now showing {{ playerName }}</h2>
 	<!--removes circles and shows teams picked-->
-	<div>
-		<p id="show_teams">Show Teams</p> /
-		<p id="hide_teams">Hide Teams</p>
-	</div>
 
+	<h2>Picks by Confidence</h2>
 <script>
 
 	// create element
@@ -179,8 +181,9 @@ d3.csv("static/files/"+sourceFile, function(d) {
 	console.log(rows);
 	plotCircle();
 	plotTeam();
-	drawAxis();
 	plotTeamCircle();
+	plotConfidence();
+	drawAxis();
 	drawTeamAxis();
 });
 };
@@ -248,13 +251,16 @@ d3.select("#show_teams")
   });
   
 d3.select("#hide_teams")
-.on("click", function() {
-  d3.selectAll("circle")
-    .transition()
-	.style("opacity", "1")
-  d3.selectAll(".team")
-    .transition()
-	.style("opacity", "0")
+  .on("click", function() {
+      d3.selectAll("circle")
+        .transition()
+	    .style("opacity", "1")
+      d3.selectAll(".team")
+        .transition()
+	    .style("opacity", "0")
+	  d3.selectAll(".confidence")
+	    .transition()
+	    .style("opacity", "0")
 });
 
 
@@ -275,15 +281,6 @@ loadData();
 <div><h2>Picks by Team</h2></div>
 
 <script>
-
-//View by Team
-
-/*
-var w = 650;
-var h = 375;
-var yPadding = 40;
-var xPadding = 65;
-var textPadding = 10;*/
 
 
 var Teamw = 450;
@@ -344,8 +341,23 @@ function plotTeamCircle() {
    
 
 function plotConfidence() {
-
-};
+	
+   	Teamsvg.selectAll("text")
+   	   .data(dataset)
+   	   .enter()
+   	   .append("text")
+   	   .text(function(data) { return data.confidence.toString(); })
+	   .attr("class", "confidence")
+   	   .attr("x", function(data) { return xTeamScale(data.week); })
+   	   .attr("y", function(data) { return yTeamScale(data.team)+3; })
+	   .attr("font-family","sans-serif")
+	   .attr("font-size","11px")
+   	   .attr("fill", function(data) {
+   		   if (data.result == "CORRECT") { return "green"; } 
+   		   else { return "red";} 
+   	   })
+	   .style("opacity","0");
+   };
 
  
 function drawTeamAxis() {
@@ -364,9 +376,6 @@ function drawTeamAxis() {
 };
 
 </script>
-
-
-
 
 <div id='footer'>Questions/Comments? 
 <a href="http://www.twitter.com/davidheller">@davidheller</a> 
