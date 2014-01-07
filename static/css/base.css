@@ -18,6 +18,11 @@ p {
 	display: inline;
 }
 
+#tip {
+	color: black;
+	font-size: 12px;
+}
+
 #week {
 	color: black;
 	padding: 300px;
@@ -34,5 +39,5 @@ h2 {
 }
 
 #footer {
-	padding-top:10px;
+	padding-top:25px;
 }

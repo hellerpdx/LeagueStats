@@ -56,15 +56,24 @@
 
 		    $( "#players" ).autocomplete({
 			    source: players,
+				select: function(event,ui) {
+					d3.selectAll("circle").remove();
+					d3.selectAll("text").remove();
+					playerName = $("#players").val();
+					sourceFile = playerMap[playerName];
+					loadData();
+				}
 			});
 		});
 	</script>
 
 </head>
 <body>
+
 	<div class="ui-widget">
 		<label for="players">Pick Player</label>
-		<input for id="players">
+		<input id="players">
+		<p id="tip">Use Up & Down Arrows and Enter to select</p>
 	</div>
 	<!--removes circles and shows teams picked-->
 
@@ -214,16 +223,6 @@ d3.select("#hide_teams")
 	    .style("opacity", "0")
 });
 
-
-// Set playerName based on input selection
-$("#players").on("autocompleteselect", function(event, ui){
-	playerName = $("#players").val();
-	sourceFile = playerMap[playerName];
-	d3.selectAll("circle").remove();
-	d3.selectAll("text").remove();
-	loadData();
-});
-
 loadData();
 
 </script>
@@ -240,7 +239,7 @@ loadData();
 <script>
 
 
-var Teamw = 475;
+var Teamw = 625;
 var Teamh = 675;
 var yTeamPadding = 40;
 var xTeamPadding = 65;
