@@ -1,6 +1,7 @@
 body {
 	font-family: 'Ubuntu Mono', sans-serif;
 	font-size: 12px;
+	color: black;
 }
 .axis path,
 .axis line {
@@ -14,23 +15,23 @@ body {
 }
 
 p {
-	color: blue;
 	display: inline;
 }
 
+.detail {
+	color: blue;
+}
+
 #tip {
-	color: black;
 	font-size: 12px;
 }
 
 #week {
-	color: black;
 	padding: 300px;
 }
 
 h2 {
 	font-size: 18px;
-	color: black;
 }
 
 .ui-widget {
