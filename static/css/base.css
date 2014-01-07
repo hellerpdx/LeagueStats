@@ -1,0 +1,38 @@
+body {
+	font-family: 'Ubuntu Mono', sans-serif;
+	font-size: 12px;
+}
+.axis path,
+.axis line {
+	fill: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+
+.axis text {
+	font-size: 12px;
+}
+
+p {
+	color: blue;
+	display: inline;
+}
+
+#week {
+	color: black;
+	padding: 300px;
+}
+
+h2 {
+	font-size: 18px;
+	color: black;
+}
+
+.ui-widget {
+	font-family: 'Ubuntu Mono', sans-serif;
+	font-size: 18px;
+}
+
+#footer {
+	padding-top:10px;
+}

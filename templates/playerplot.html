@@ -6,10 +6,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Player Plot</title>
 	<meta name="author" content="David Heller">
-	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base.css')}}"></link>
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="{{ url_for('static', filename='d3.v3.min.js')}}" charset="utf-8"></script>
     <script>
 	$ (function() {
 
@@ -58,70 +60,21 @@
 		});
 	</script>
 
-	<style type="text/css">
-	
-	.axis path,
-	.axis line {
-		fill: none;
-		stroke: black;
-		shape-rendering: crispEdges;
-	}
-	
-	.axis text {
-		font-family: sans-serif;
-		font-size: 11px;
-	}
-	
-	p {
-		font-family: sans-serif;
-		font-size: 13px;
-		color: blue;
-		display: inline;
-	}
-	
-	#show_teams {
-		padding-left: 5px;
-	}
-	
-	#week {
-		font-size: 16px;
-		font-family: sans-serif;
-		color: black;
-		padding: 300px;
-	}
-	
-	h2 {
-		font-family: sans-serif;
-		font-size: 24px;
-		color: black;
-	}
-	
-	.ui-widget {
-		font-family: sans-serif;
-		font-size: 13px;
-	}
-	
-	#footer {
-		font-size:14px;
-		padding-top:10px;
-	}
-	
-
-
-	</style>
-
-	<!-- Date: 2013-12-26 -->
 </head>
 <body>
 	<div class="ui-widget">
 		<label for="players">Pick Player</label>
 		<input for id="players">
-		<p id="show_teams">Show Detail</p> /
-		<p id="hide_teams">Hide Detail</p>
 	</div>
 	<!--removes circles and shows teams picked-->
 
-	<h2>Picks by Confidence</h2>
+	<div>
+		<h2>Picks by Weight</h2>
+		<div class="detail">		
+			<p id="show_teams">Show Teams</p> /
+		    <p id="hide_teams">Hide Teams</p>
+		</div>
+	</div>
 <script>
 
 	// create element
@@ -194,6 +147,7 @@ function plotCircle() {
        .data(dataset)
        .enter()
        .append("circle")
+	   .attr("class","teamcircle")
    	   .attr("cx", function(data) { return xScale(data.week); })
 	   .attr("cy", function(data) { return yScale(data.confidence); })
 	   .attr("r", 5)
@@ -242,24 +196,21 @@ function drawAxis() {
 
 d3.select("#show_teams")
   .on("click", function() {
-	  d3.selectAll("circle")
+	  d3.selectAll(".teamcircle")
 	    .transition()
 		.style("opacity", "0")
-	  d3.selectAll("text")
+	  d3.selectAll(".team")
 	    .transition()
 		.style("opacity", "1")
   });
   
 d3.select("#hide_teams")
   .on("click", function() {
-      d3.selectAll("circle")
+      d3.selectAll(".teamcircle")
         .transition()
 	    .style("opacity", "1")
       d3.selectAll(".team")
         .transition()
-	    .style("opacity", "0")
-	  d3.selectAll(".confidence")
-	    .transition()
 	    .style("opacity", "0")
 });
 
@@ -278,12 +229,18 @@ loadData();
 </script>
 <div><p id="week">Week</p></div>
 
-<div><h2>Picks by Team</h2></div>
+<div>
+	<h2>Picks by Team</h2>
+	<div class="detail">	
+		<p id="show_weight">Show Weight</p> / 
+	    <p id="hide_weight">Hide Weight</p>
+	</div>
+</div>
 
 <script>
 
 
-var Teamw = 450;
+var Teamw = 475;
 var Teamh = 675;
 var yTeamPadding = 40;
 var xTeamPadding = 65;
@@ -323,13 +280,35 @@ var yTeamAxis = d3.svg.axis()
 					 'NE', 'NO', 'NYG', 'NYJ', 'OAK', 'PHI', 'PIT', 'SD', 'SEA', 'SF', 
 					 'STL', 'TB', 'TEN', 'WAS']);
 
+ // allows to switch from circles to weight
+
+ d3.select("#show_weight")
+   .on("click", function() {
+ 	  d3.selectAll(".weightcircle")
+ 	    .transition()
+ 		.style("opacity", "0")
+ 	  d3.selectAll(".weight")
+ 	    .transition()
+ 		.style("opacity", "1")
+   });
+
+ d3.select("#hide_weight")
+   .on("click", function() {
+       d3.selectAll(".weightcircle")
+         .transition()
+ 	    .style("opacity", "1")
+       d3.selectAll(".weight")
+         .transition()
+ 	    .style("opacity", "0")
+ });
+
 function plotTeamCircle() {
 
 	Teamsvg.selectAll("circle")
        .data(dataset)
        .enter()
        .append("circle")
-	   .attr("class", "teamcircle")
+	   .attr("class", "weightcircle")
    	   .attr("cx", function(data) { return xTeamScale(data.week); })
 	   .attr("cy", function(data) { return yTeamScale(data.team); })
 	   .attr("r", 5)
@@ -347,7 +326,7 @@ function plotConfidence() {
    	   .enter()
    	   .append("text")
    	   .text(function(data) { return data.confidence.toString(); })
-	   .attr("class", "confidence")
+	   .attr("class", "weight")
    	   .attr("x", function(data) { return xTeamScale(data.week); })
    	   .attr("y", function(data) { return yTeamScale(data.team)+3; })
 	   .attr("font-family","sans-serif")
