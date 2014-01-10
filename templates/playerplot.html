@@ -57,9 +57,19 @@
 		    $( "#players" ).autocomplete({
 			    source: players,
 				select: function(event,ui) {
+					var origEvent = event;
+					while (origEvent.originalEvent != undefined) {
+						origEvent = origEvent.originalEvent;
+					}
+					console.info('Event type = ' + origEvent.type);
+					console.info('ui.item.value = ' + ui.item.value);
+					if (origEvent.type == 'click') {
+						playerName = ui.item.value;
+					} else {
+						playerName = $("#players").val();
+					}
 					d3.selectAll("circle").remove();
 					d3.selectAll("text").remove();
-					playerName = $("#players").val();
 					sourceFile = playerMap[playerName];
 					loadData();
 				}
@@ -71,9 +81,9 @@
 <body>
 
 	<div class="ui-widget">
-		<label for="players">Pick Player</label>
+		<label for="players">Choose Player</label>
 		<input id="players">
-		<p id="tip">Use Up & Down Arrows and Enter to select</p>
+		<!-- <p id="tip">Start typing na</p> -->
 	</div>
 	<!--removes circles and shows teams picked-->
 
